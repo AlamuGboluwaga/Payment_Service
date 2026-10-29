@@ -17,6 +17,11 @@ public class PaymentController {
         this.service = service;
     }
 
+    @GetMapping({"", "/"})
+    public String check() {
+        return "Payment service is running";
+    }
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public PaymentResponse initialize(

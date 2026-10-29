@@ -10,6 +10,7 @@ import java.time.Instant;
 @Table(name = "payments", uniqueConstraints = {@UniqueConstraint(name = "uk_payment_reference", columnNames = "reference"), @UniqueConstraint(name = "uk_payment_idempotency", columnNames = "idempotency_key")})
 @Getter
 @Setter
+@AllArgsConstructor
 @NoArgsConstructor
 
 public class Payment {

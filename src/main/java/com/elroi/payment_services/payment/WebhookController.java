@@ -1,6 +1,5 @@
 package com.elroi.payment_services.payment;
 
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import tools.jackson.databind.*;
@@ -13,7 +12,6 @@ import org.springframework.beans.factory.annotation.Value;
 
 
 
-@Slf4j
 @RestController
 @RequestMapping("/api/webhooks")
 public class WebhookController {
@@ -27,7 +25,6 @@ public class WebhookController {
         this.paymentService = paymentService;
         this.objectMapper = objectMapper;
         this.secretKey = secretKey;
-        log.info("Webhook secret key: {}", secretKey);
     }
 
     @PostMapping("/paystack")
