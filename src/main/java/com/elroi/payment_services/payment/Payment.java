@@ -12,6 +12,7 @@ import java.time.Instant;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 
 public class Payment {
 
@@ -48,18 +49,21 @@ public class Payment {
 
     private Instant updatedAt = Instant.now();
 
+
     public Payment(String email, BigDecimal amount, String reference, String idempotencyKey) {
         this.email = email;
         this.amount = amount;
         this.reference = reference;
         this.idempotencyKey = idempotencyKey;
     }
+
     @PrePersist
     public void beforeInsert() {
         Instant now = Instant.now();
         createdAt = now;
         updatedAt = now;
     }
+
     @PreUpdate
     public void beforeUpdate() {
         updatedAt = Instant.now();

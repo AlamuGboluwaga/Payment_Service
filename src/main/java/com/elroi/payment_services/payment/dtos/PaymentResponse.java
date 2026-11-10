@@ -14,6 +14,7 @@ public record PaymentResponse(String reference, BigDecimal amount, String curren
                 payment.getCurrency(),
                 payment.getStatus(),
                 payment.getAuthorizationUrl()
+
         );
     }
 }
