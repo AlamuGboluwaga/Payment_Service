@@ -23,13 +23,13 @@ public class Payment {
     private Long id;
 
     @Column(nullable = false)
-    @Email(message = "email with wrong format no @ sign")
+    @Email
     private String email;
 
     @Column(nullable = false, precision = 19, scale = 2)
     private BigDecimal amount;
 
-    @NotBlank(message = "Currency  can not be null")
+    @NotBlank(message = "Currency  can not be blank")
     @Column(nullable = false, length = 3)
     private String currency = "NGN";
 
@@ -54,12 +54,12 @@ public class Payment {
     private Instant updatedAt = Instant.now();
 
 
-//    public Payment(String email, BigDecimal amount, String reference, String idempotencyKey) {
-//        this.email = email;
-//        this.amount = amount;
-//        this.reference = reference;
-//        this.idempotencyKey = idempotencyKey;
-//    }
+    public Payment(String email, BigDecimal amount, String reference, String idempotencyKey) {
+        this.email = email;
+        this.amount = amount;
+        this.reference = reference;
+        this.idempotencyKey = idempotencyKey;
+    }
 
     @PrePersist
     public void beforeInsert() {

@@ -38,16 +38,18 @@ public class GlobalExceptionHandler {
         return ResponseEntity.badRequest().body(response);
     }
 
-
     @ExceptionHandler(DataIntegrityViolationException.class)
-    public ResponseEntity<ApiErrorResponse> handleDataIntegrityViolationException(DataIntegrityViolationException e) {
+    public ResponseEntity<ApiErrorResponse> handleDataIntegrityViolationException(DataIntegrityViolationException ex) {
 
-        ApiErrorResponse apiErrorResponse = new ApiErrorResponse(500, "Bad Request", e.getMessage());
-        log.error("", e.getMessage());
+        log.error("DataIntegrityViolationException", ex);
 
-        return ResponseEntity
-                .badRequest()
-                .body(apiErrorResponse);
+        String message = "Database error: Constraint violation";
+        if (ex.getRootCause() != null) {
+            message = ex.getRootCause().getMessage();
+        }
+
+        ApiErrorResponse response = new ApiErrorResponse(400, "Bad Request", message);
+        return ResponseEntity.badRequest().body(response);
     }
 
     @ExceptionHandler(DuplicateIdempotencyKey.class)

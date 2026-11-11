@@ -48,8 +48,8 @@ public class PaymentServices {
             String reference = "PAY-" + UUID.randomUUID().toString().replace("-", "");
             PaymentStatus status = PaymentStatus.PENDING;
 
-//            Payment payment = new Payment(request.getEmail(), amount, reference, idempotencyKey);
-            Payment payment = Payment.builder().email(request.getEmail()).amount(amount).currency("NGN").reference(reference).idempotencyKey(idempotencyKey).status(status).build();
+            Payment payment = new Payment(request.getEmail(), amount, reference, idempotencyKey);
+//            Payment payment = Payment.builder().email(request.getEmail()).amount(amount).currency("NGN").reference(reference).idempotencyKey(idempotencyKey).status(status).build();
             Payment savedepayment = repository.saveAndFlush(payment);
             return PaymentResponse.from(savedepayment);
         } catch (ArithmeticException e) {
