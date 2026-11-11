@@ -1,6 +1,6 @@
 package com.elroi.payment_services;
 
-import com.elroi.payment_services.payment.GblobalExceptionHandler.DataIntegrityViolationException;
+
 import com.elroi.payment_services.payment.GblobalExceptionHandler.DuplicateIdempotencyKey;
 import com.elroi.payment_services.payment.GblobalExceptionHandler.InvalidAmountException;
 import com.elroi.payment_services.payment.Payment;
@@ -9,6 +9,7 @@ import com.elroi.payment_services.payment.PaymentStatus;
 import com.elroi.payment_services.payment.dtos.PaymentRequest;
 import com.elroi.payment_services.payment.dtos.PaymentResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -46,11 +47,11 @@ public class PaymentServices {
             BigDecimal amount = request.getAmount().setScale(2, RoundingMode.UNNECESSARY);
             String reference = "PAY-" + UUID.randomUUID().toString().replace("-", "");
             PaymentStatus status = PaymentStatus.PENDING;
-            
-            Payment payment = new Payment(request.getEmail(), amount, reference, idempotencyKey);
-//            Payment payment = Payment.builder().email(request.getEmail()).amount(amount).currency("NGN").reference(reference).idempotencyKey(idempotencyKey).status(status).build();
-            Payment savvdepayment = repository.saveAndFlush(payment);
-            return PaymentResponse.from(savvdepayment);
+
+//            Payment payment = new Payment(request.getEmail(), amount, reference, idempotencyKey);
+            Payment payment = Payment.builder().email(request.getEmail()).amount(amount).currency("NGN").reference(reference).idempotencyKey(idempotencyKey).status(status).build();
+            Payment savedepayment = repository.saveAndFlush(payment);
+            return PaymentResponse.from(savedepayment);
         } catch (ArithmeticException e) {
             throw new InvalidAmountException("message : Transaction amount must have at most 2 decimal places");
         }
