@@ -3,6 +3,7 @@
 //import com.elroi.payment_services.payment.dtos.PaymentRequest;
 //import com.elroi.payment_services.payment.dtos.PaymentResponse;
 //import lombok.extern.slf4j.Slf4j;
+//import org.springframework.core.env.Environment;
 //import org.springframework.stereotype.Service;
 //import org.springframework.transaction.annotation.Transactional;
 //import tools.jackson.databind.JsonNode;
@@ -13,13 +14,14 @@
 //
 //@Slf4j
 //@Service
-//public class PaymentService {
 //
+//
+//public class PaymentService {
 //    private final PaymentRepository repository;
 //    private final PaystackClient paystack;
 //    private final String callbackUrl;
 //
-//    public PaymentService(PaymentRepository repository, PaystackClient paystack, org.springframework.core.env.Environment env) {
+//    public PaymentService(PaymentRepository repository, PaystackClient paystack, Environment env) {
 //        this.repository = repository;
 //        this.paystack = paystack;
 //        this.callbackUrl = env.getRequiredProperty("paystack.callback-url");
@@ -51,7 +53,6 @@
 //
 /// /        Payment payment = Payment.builder().email(request.getEmail()).amount(amount).reference(reference).idempotencyKey(idempotencyKey)
 /// /                .build();
-/// /
 //
 //        // Persist before making the external API call.
 //        payment = repository.saveAndFlush(payment);
@@ -59,10 +60,7 @@
 //
 //        long amountKobo = amount.movePointRight(2).longValueExact();
 //        JsonNode data = paystack.initialize(payment.getEmail(), amountKobo, payment.getReference(), callbackUrl);
-//        //
 //
-//
-//        //
 //        payment.setAuthorizationUrl(data.path("authorization_url").asString());
 //        //
 //        return PaymentResponse.from(repository.save(payment));
